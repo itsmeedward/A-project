@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Table 06</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="/admin/css/style.css">
+
+
+
+
+
+	</head>
+	<body>
+	
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-4">
+					<h2 class="heading-section">Table #06</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="h5 mb-4 text-center">Table Accordion</h3>
+					<div class="table-wrap">
+						<table class="table">
+						  <thead class="thead" style="
+						  background: #5b9842f2;
+					  ">
+						    <tr>
+						    	<th> <a href="add"style="
+									" ><span aria-hidden="true"> Yeni Ürün Ekle  <i class="fa fa-plus"></i></span></a> </th>
+						    	<th>&nbsp;</th>
+						    	<th>Product</th>
+						      <th>Price</th>
+						      <th>Quantity</th>
+						      <th>total</th>
+						      <th>&nbsp;</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+							<% prod.forEach(product => { %>
+						    <tr class="alert" role="alert">
+						    	<td>
+						    		<label class="checkbox-wrap checkbox-primary">
+										  <input type="checkbox" checked>
+										  <span class="checkmark"></span>
+										</label>
+						    	</td>
+						    	<td>
+						    		<div class="img" style="background-image: url(/admin/images/product-1.png);"></div>
+						    	</td>
+						      <td>
+						      	<div class="email">
+						      		<span><%=product.title%></span>
+						      		<span><%=product.long%></span>
+						      	</div>
+						      </td>
+						      <td><%=product.short%></td>
+						      <td class="quantity">
+					        	<div class="input-group">
+				             	<input type="text" name="quantity" class="quantity form-control input-number" value="2" min="1" max="100">
+				          	</div>
+				          </td>
+				          <td>$89.98</td>
+						      <td>
+						      	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				            	<a class="del22" data-doc="<%=product._id%>" ><span aria-hidden="true"><i class="fa fa-close" ></i></a></span>
+				          	</button>
+				        	</td>
+						    </tr>
+							<%  })%>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+	const del=	document.querySelectorAll('a.del22')
+	const delLinks = [].slice.call(del)
+	
+	delLinks.forEach((item,i) => {
+	
+		item.addEventListener('click', (e)=>{
+		console.log(del)
+		const endpoint = `/admin/delete/${item.dataset.doc}`
+
+		fetch(endpoint,{
+		method : 'DELETE'
+		})
+		.then((response)=>response.json())
+		.then((data)=>window.location.href = data.link)
+		.catch((err)=>{
+			console.log(err)
+		})
+	})
+
+
+	})
+
+	</script>
+
+	<script src="/admin/js/jquery.min.js"></script>
+  <script src="/admin/js/popper.js"></script>
+  <script src="/admin/js/bootstrap.min.js"></script>
+  <script src="/admin/js/main.js"></script>
+
+	</body>
+</html>
+

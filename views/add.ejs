@@ -1,0 +1,98 @@
+<%- include ('./includes/admin/header') %>
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">  </h3>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Form elements</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row">
+             
+              <div class="col-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <a href="/admin" class="close"> <span class="text-success"><</span>Ürün Listesine gidin </a>
+                    <h4 class="card-title">Ürün Ekleme Sihirbazı</h4> 
+                    <p class="card-description"> <span class="text-danger"> *</span> Doldurulması zorunlu alanları ifade eder. </p>
+                    <p class="card-description"> <span class="text-success"> +</span> CDN Bir görselin uzantısı anlamına gelir. görselin yüklemek yerine yüklenmiş olan görselleri projenizde kullanabilirsiniz. </p>
+                    <form action="/admin/add" method="POST" class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">Ürün Başlığı <span class="text-danger"> *</span></label>
+                        <input type="text"name="title"placeholder="Başlık" required class="form-control" id="exampleInputName1" >
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail3">Kısa Açıklama <span class="text-danger"> *</span></label>
+                        <input type="text" class="form-control" id="exampleInputEmail3" name="short"placeholder="Kısa açıklama" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">CDN giriniz<span class="text-danger"> </span></label>
+                        <input type="text" class="form-control" id="exampleInputPassword4" name="cdn"placeholder="cdn">
+                      </div>
+                      <!-- <div class="form-group">
+                        <label for="exampleSelectGender">Gender<span class="text-danger"> *</span></label>
+                        <select class="form-control" id="exampleSelectGender">
+                          <option>Male</option>
+                          <option>Female</option>
+                        </select>
+                      </div> -->
+                      <!-- <div class="form-group">
+                        <label>File upload</label>
+                        <input type="file" name="img[]" class="file-upload-default">
+                        <div class="input-group col-xs-12">
+                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                          <span class="input-group-append">
+                            <button class="file-upload-browse btn btn-gradient-success" type="button">Upload</button>
+                          </span>
+                        </div>
+                      </div> -->
+                      <div class="form-group">
+                        <label for="exampleInputCity1">Ürün Fiyatı<span class="text-danger"> *</span></label>
+                        <input type="number" class="form-control" id="exampleInputCity1"name="fiyat"placeholder="price" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">Uzun Açıklama<span class="text-danger"> *</span></label>
+                        <textarea class="form-control" name="long"placeholder="Detay" required id="exampleTextarea1" rows="4"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <div class="input-group">
+                          
+                          <div class="input-group-prepend">
+                           
+                           
+                            <input type="text" class="form-control" placeholder="Kategori seçiniz:" aria-label="Text input with dropdown button" readonly>
+                            <span class="text-danger"> *</span>
+                            <select name="kategori" class="btn btn-sm btn-outline-success dropdown-toggle"   type="button" data-toggle="dropdown" aria-haspopup="true" required>
+                              <% cat.forEach(category => { %>
+                              <option value="<%=category.kategori%>" class="dropdown-item"><%=category.kategori%></option>
+                              <%  })%>
+                            </select>
+                    
+                            
+                            <input type="text" class="form-control" placeholder="Alt Kategori seçiniz:" aria-label="Text input with dropdown button" readonly>
+                           
+                            <select name="altkategori" class="btn btn-sm btn-outline-success dropdown-toggle"   type="button" data-toggle="dropdown" aria-haspopup="true" >
+                              <% cat.forEach(category => { %>
+                              <option value="<%=category.altkategori%>" class="dropdown-item"><%=category.altkategori%></option>
+                              <%  })%>
+                            </select>
+                          
+                          </div>
+                          
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-gradient-success mr-2">Submit</button>
+                      <button class="btn btn-light">Cancel</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+             
+             
+          
+            </div>
+          </div>
+          <%- include ('./includes/admin/footer') %>

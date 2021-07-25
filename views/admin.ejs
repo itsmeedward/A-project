@@ -1,0 +1,98 @@
+<%- include ('./includes/admin/header') %>
+
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Ürünler listei
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+           
+            
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                   <a href="add" class="close"> <span class="text-success">+</span>Ürün Ekle</a>
+                    <h4 class="card-title">Ürün Listesi </h4>
+                  
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Görsel ve Ürün İsmi </th>
+                            <th> Kısa açıklaması </th>
+                            <!-- <th> Status </th> -->
+                            <th> Uzun Açıklaması </th>
+                            <th> Düzenle </th>
+                            <th>Sil</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% prod.forEach(product => { %>
+                          <tr>
+                            <td>
+                              <img style=" width: 105px !important;
+                              height: 105px !important; border-radius: 0mm !important;" src="<%=product.cdn%>" class="mr-2" alt="image"> <%=product.title%>
+                            </td>
+                            <td>  <%=product.short%> </td>
+                            <!-- <td>
+                              <label class="badge badge-gradient-success">DONE</label>
+                            </td> -->
+                            <td style="width: 10px !important; height: 100px;">  <%=product.long%> </td>
+                            <td><button type="button" class="close"  aria-label="Close">
+                              <a class="edit"  href="edit" data-doc="<%=product._id%>" ><span aria-hidden="true"><i class="fa fa-edit" ></i></a></span> </td>
+                           
+                           
+                              <td><button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <a class="del22"  data-doc="<%=product._id%>" ><span aria-hidden="true"><i class="fa fa-close" ></i></a></span></td>
+                          </tr>
+                      
+                          <%  })%>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <script>
+            const del=	document.querySelectorAll('a.del22')
+            const delLinks = [].slice.call(del)
+            
+            delLinks.forEach((item,i) => {
+            
+              item.addEventListener('click', (e)=>{
+              console.log(del)
+              const endpoint = `/admin/delete/${item.dataset.doc}`
+          
+              fetch(endpoint,{
+              method : 'DELETE'
+              })
+              .then((response)=>response.json())
+              .then((data)=>window.location.href = data.link)
+              .catch((err)=>{
+                console.log(err)
+              })
+            })
+          
+          
+            })
+          
+            </script>
+         <%- include ('./includes/admin/footer') %>

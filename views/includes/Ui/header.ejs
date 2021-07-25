@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>Carousel Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <style>
+
+      @media (print), (prefers-reduced-motion: reduce) {
+          .animated {
+              -webkit-animation-duration: 1ms !important;
+              animation-duration: 1ms !important;
+              -webkit-transition-duration: 1ms !important;
+              transition-duration: 1ms !important;
+              -webkit-animation-iteration-count: 1 !important;
+              animation-iteration-count: 1 !important;
+          }
+      }
+      #app {
+        background: #0a0a0a;
+        height: 30vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(rgba(145, 145, 145, 0.418), rgba(109, 133, 170, 0.555)), repeating-linear-gradient(0, transparent, transparent 2px, rgba(18, 30, 134, 0.507) 3px, rgba(0, 0, 0, 0.412) 3px), url("https://cdn.pixabay.com/photo/2017/07/28/13/29/spices-2548653_960_720.jpg");
+        background-size: cover;
+        background-position: center;
+        z-index: 1;
+      }
+    
+      #wrapper {
+        text-align: center;
+      }
+    
+      .sub {
+        color: #64dcdc;
+        letter-spacing: 1em;
+        font-size: 23px;
+          background: blue;
+          border-top: 20px solid yellowgreen;
+          padding: 7px 7px;
+          border-radius: 2px;
+      }
+    
+      /* Our mixin positions a copy of our text
+      directly on our existing text, while
+      also setting content to the appropriate
+      text set in the data-text attribute. */
+      .glitch {
+        position: relative;
+        color: white;
+        font-size: 4em;
+        letter-spacing: 0.5em;
+        /* Animation provies a slight random skew. Check bottom of doc
+        for more information on how to random skew. */
+        animation: glitch-skew 1s infinite linear alternate-reverse;
+      }
+      .glitch::before {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        left: 2px;
+        text-shadow: -2px 0 #ff00c1;
+        /* Creates an initial clip for our glitch. This works in
+        a typical top,right,bottom,left fashion and creates a mask
+        to only show a certain part of the glitch at a time. */
+        clip: rect(44px, 450px, 56px, 0);
+        /* Runs our glitch-anim defined below to run in a 5s loop, infinitely,
+        with an alternating animation to keep things fresh. */
+        animation: glitch-anim 5s infinite linear alternate-reverse;
+      }
+      .glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        left: -2px;
+        text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+        animation: glitch-anim2 1s infinite linear alternate-reverse;
+      }
+    
+      /* Creates an animation with 20 steaps. For each step, it calculates 
+      a percentage for the specific step. It then generates a random clip
+      box to be used for the random glitch effect. Also adds a very subtle
+      skew to change the 'thickness' of the glitch.*/
+      @keyframes glitch-anim {
+        0% {
+          clip: rect(1px, 9999px, 49px, 0);
+          transform: skew(0.53deg);
+        }
+        5% {
+          clip: rect(57px, 9999px, 79px, 0);
+          transform: skew(0.78deg);
+        }
+        10% {
+          clip: rect(10px, 9999px, 83px, 0);
+          transform: skew(0.39deg);
+        }
+        15% {
+          clip: rect(22px, 9999px, 26px, 0);
+          transform: skew(0.68deg);
+        }
+        20% {
+          clip: rect(5px, 9999px, 75px, 0);
+          transform: skew(0.79deg);
+        }
+        25% {
+          clip: rect(25px, 9999px, 85px, 0);
+          transform: skew(0.65deg);
+        }
+        30% {
+          clip: rect(26px, 9999px, 96px, 0);
+          transform: skew(0.48deg);
+        }
+        35% {
+          clip: rect(70px, 9999px, 39px, 0);
+          transform: skew(0.9deg);
+        }
+        40% {
+          clip: rect(48px, 9999px, 5px, 0);
+          transform: skew(0.65deg);
+        }
+        45% {
+          clip: rect(43px, 9999px, 39px, 0);
+          transform: skew(0.33deg);
+        }
+        50% {
+          clip: rect(25px, 9999px, 32px, 0);
+          transform: skew(0.58deg);
+        }
+        55% {
+          clip: rect(87px, 9999px, 69px, 0);
+          transform: skew(0.93deg);
+        }
+        60% {
+          clip: rect(70px, 9999px, 77px, 0);
+          transform: skew(0.41deg);
+        }
+        65% {
+          clip: rect(36px, 9999px, 63px, 0);
+          transform: skew(0.88deg);
+        }
+        70% {
+          clip: rect(56px, 9999px, 39px, 0);
+          transform: skew(1deg);
+        }
+        75% {
+          clip: rect(98px, 9999px, 47px, 0);
+          transform: skew(0.93deg);
+        }
+        80% {
+          clip: rect(35px, 9999px, 33px, 0);
+          transform: skew(0.65deg);
+        }
+        85% {
+          clip: rect(62px, 9999px, 94px, 0);
+          transform: skew(0.63deg);
+        }
+        90% {
+          clip: rect(68px, 9999px, 90px, 0);
+          transform: skew(0.18deg);
+        }
+        95% {
+          clip: rect(51px, 9999px, 60px, 0);
+          transform: skew(0.12deg);
+        }
+        100% {
+          clip: rect(39px, 9999px, 44px, 0);
+          transform: skew(0.83deg);
+        }
+      }
+      @keyframes glitch-anim2 {
+        0% {
+          clip: rect(25px, 9999px, 54px, 0);
+          transform: skew(0.54deg);
+        }
+        5% {
+          clip: rect(32px, 9999px, 67px, 0);
+          transform: skew(0.81deg);
+        }
+        10% {
+          clip: rect(21px, 9999px, 78px, 0);
+          transform: skew(0.67deg);
+        }
+        15% {
+          clip: rect(6px, 9999px, 53px, 0);
+          transform: skew(0.53deg);
+        }
+        20% {
+          clip: rect(83px, 9999px, 77px, 0);
+          transform: skew(0.99deg);
+        }
+        25% {
+          clip: rect(83px, 9999px, 37px, 0);
+          transform: skew(0.38deg);
+        }
+        30% {
+          clip: rect(85px, 9999px, 87px, 0);
+          transform: skew(0.24deg);
+        }
+        35% {
+          clip: rect(100px, 9999px, 93px, 0);
+          transform: skew(0.31deg);
+        }
+        40% {
+          clip: rect(44px, 9999px, 55px, 0);
+          transform: skew(0.41deg);
+        }
+        45% {
+          clip: rect(17px, 9999px, 2px, 0);
+          transform: skew(0.25deg);
+        }
+        50% {
+          clip: rect(70px, 9999px, 4px, 0);
+          transform: skew(0.22deg);
+        }
+        55% {
+          clip: rect(39px, 9999px, 25px, 0);
+          transform: skew(0.68deg);
+        }
+        60% {
+          clip: rect(78px, 9999px, 66px, 0);
+          transform: skew(0.94deg);
+        }
+        65% {
+          clip: rect(88px, 9999px, 34px, 0);
+          transform: skew(0.55deg);
+        }
+        70% {
+          clip: rect(15px, 9999px, 90px, 0);
+          transform: skew(0.52deg);
+        }
+        75% {
+          clip: rect(4px, 9999px, 23px, 0);
+          transform: skew(0.01deg);
+        }
+        80% {
+          clip: rect(87px, 9999px, 12px, 0);
+          transform: skew(0.01deg);
+        }
+        85% {
+          clip: rect(20px, 9999px, 35px, 0);
+          transform: skew(1deg);
+        }
+        90% {
+          clip: rect(73px, 9999px, 47px, 0);
+          transform: skew(0.29deg);
+        }
+        95% {
+          clip: rect(68px, 9999px, 17px, 0);
+          transform: skew(0.85deg);
+        }
+        100% {
+          clip: rect(18px, 9999px, 22px, 0);
+          transform: skew(0.05deg);
+        }
+      }
+      @keyframes glitch-skew {
+        0% {
+          transform: skew(2deg);
+        }
+        10% {
+          transform: skew(0deg);
+        }
+        20% {
+          transform: skew(3deg);
+        }
+        30% {
+          transform: skew(4deg);
+        }
+        40% {
+          transform: skew(-1deg);
+        }
+        50% {
+          transform: skew(0deg);
+        }
+        60% {
+          transform: skew(-4deg);
+        }
+        70% {
+          transform: skew(-1deg);
+        }
+        80% {
+          transform: skew(5deg);
+        }
+        90% {
+          transform: skew(3deg);
+        }
+        100% {
+          transform: skew(-3deg);
+        }
+      }
+    
+      /*css for manual slide navigation*/
+    
+      .navigation-manual{
+        position: absolute;
+        width: 800px;
+        margin-top: -40px;
+        display: flex;
+        justify-content: center;
+      }
+    
+      .manual-btn{
+        border: 2px solid #40D3DC;
+        padding: 5px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 1s;
+      }
+    
+      .manual-btn:not(:last-child){
+        margin-right: 40px;
+      }
+    
+      .manual-btn:hover{
+        background: #40D3DC;
+      }
+    
+      #radio1:checked ~ .first{
+        margin-left: 0;
+      }
+    
+      #radio2:checked ~ .first{
+        margin-left: -20%;
+      }
+    
+      #radio3:checked ~ .first{
+        margin-left: -40%;
+      }
+    
+      #radio4:checked ~ .first{
+        margin-left: -60%;
+      }
+    
+      /*css for automatic navigation*/
+    
+      .navigation-auto{
+        position: absolute;
+        display: flex;
+        width: 800px;
+        justify-content: center;
+        margin-top: 460px;
+      }
+    
+      .navigation-auto div{
+        border: 2px solid #40D3DC;
+        padding: 5px;
+        border-radius: 10px;
+        transition: 1s;
+      }
+    
+      .navigation-auto div:not(:last-child){
+        margin-right: 40px;
+      }
+    
+      #radio1:checked ~ .navigation-auto .auto-btn1{
+        background: #40D3DC;
+      }
+    
+      #radio2:checked ~ .navigation-auto .auto-btn2{
+        background: #40D3DC;
+      }
+    
+      #radio3:checked ~ .navigation-auto .auto-btn3{
+        background: #40D3DC;
+      }
+    
+      #radio4:checked ~ .navigation-auto .auto-btn4{
+        background: #40D3DC;
+      }
+    
+    
+    
+    
+    
+    
+          </style>
+
+<style>
+  /* Scroll barr  Start */
+  ::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #5693ab, #4eea8c70); 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background:linear-gradient(45deg, #4eea8c70 , #5693ab); 
+}
+  /* Scroll barr  END */
+</style>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <!-- Bootstrap core CSS -->
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <style>
+      #hataybilgi{
+        display: none !important;
+      }
+      #hataybilgi.show{
+        display: flex !important;
+      }
+      #hataybilgi.hide{
+        display: none !important;
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="../carousel.css" rel="stylesheet">
+    <link href="../assetsindex/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>  <body style="
+  margin: 10px;
+ ">
+    
+
+
+  
+    <header style="background-color: white;" class="fixed-top d-flex flex-wrap justify-content-center  py-3 mb-4 border-bottom ">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <img style="width: 200px; height: 50px;" src="blob.svg" onerror="this.onerror=null; this.src='blob.svg'">
+        
+        <span class="fs-4">Hatay Yöresel</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="about" class="nav-link">Hakkımızda</a></li>
+        <li class="nav-item"><a href="products" class="nav-link">Ürünler</a></li>
+       
+        <li class="nav-item"><a href="#" class="nav-link">İletişim</a></li>
+      </ul>
+ 
+</header>

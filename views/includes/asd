@@ -1,0 +1,7 @@
+   <select type="text" name="kategori" required>
+        
+        <% cat.forEach(category => { %>
+        <option value="<%=category.kategori%>"><%=category.kategori%></option>
+        
+        <%  })%>
+      </select>

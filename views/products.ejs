@@ -1,0 +1,736 @@
+<%- include ('./includes/Ui/header') %>
+ 
+ <nav style="
+  position: fixed;
+  background: black !important;
+  /* z-index: 1000; */
+  /* height: 100px; */
+  top: 83px;
+  width: 100%;
+  box-sizing: border-box;
+" class="navbar navbar-expand-lg navbar-light bg-dark hamburger">
+ 
+    <button class="navbar-toggler "  id="hamburger" type="button" data-toggle="collapse"  aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="text-light">Filtrele   </span>  
+      <!-- <span class="navbar-toggler-icon"></span> -->
+    </button>
+  
+  </nav>
+  <style>
+ 
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      background: #fff;
+      color: #1e1e1e;
+      font-family: var(--bs-font-sans-serif);
+    }
+    main {
+      margin: 0 30px 80px 30px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    main #filter {
+      padding-top: 50px;
+      padding-right: 30px;
+      padding-bottom: 150px;
+      padding-left: 30px;
+    width: 20%;
+      height: 100%;
+      position: fixed;
+      /* top: 0; */
+      left: 0;
+      /* bottom: 0; */
+      overflow-y: scroll;
+      border-right: 1px solid #777777;
+      user-select: none;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+    }
+    main #filter .ui-group {
+      border-bottom: 1px solid #777777;
+      padding-top: 30px;
+    }
+    main #filter .ui-group input {
+      display: none;
+    }
+    main #filter .ui-group label {
+      display: block;
+      padding: 30px 0;
+      cursor: pointer;
+    }
+    main #filter .ui-group label#category-label {
+      padding-top: 0;
+    }
+    main #filter .ui-group label i {
+      margin-right: 30px;
+      font-size: 1.2rem;
+      transition: all 0.2s ease-in-out;
+    }
+    main #filter .ui-group #category:checked + label > i {
+      transform: rotate(-90deg);
+    }
+    main #filter .ui-group #category:checked ~ .button-group {
+      height: 0;
+    }
+    main #filter .ui-group #color:checked + label > i {
+      transform: rotate(-90deg);
+    }
+    main #filter .ui-group #color:checked ~ .button-group {
+      height: 0;
+      margin-bottom: 0;
+    }
+    main #filter .ui-group .button-group {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    
+      transition: height 0.2s ease-in-out;
+    }
+    main #filter .ui-group .button-group div {
+      margin-bottom: 30px;
+    }
+    main #filter .ui-group .button-group input {
+      display: none;
+    }
+    main #filter .ui-group .button-group .button {
+      padding: 10px;
+      opacity: 0.5;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+    }
+    main #filter .ui-group .button-group .button.is-checked {
+      opacity: 1;
+    }
+    main #filter .ui-group .button-group .button:hover {
+      opacity: 1;
+    }
+    main #filter .ui-group .button-group .color-circle {
+      margin: 10px;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+    main #filter .ui-group .button-group .color-circle#camo {
+      background: url('https://s20.postimg.cc/top5zzkql/camo.jpg');
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    main #filter .ui-group .button-group .color-circle#green {
+      background: #5c8464;
+    }
+    main #filter .ui-group .button-group .color-circle#black {
+      background: #292826;
+    }
+    main #filter .ui-group .button-group .color-circle#blue {
+      background: #637db7;
+    }
+    main #filter .ui-group .button-group .color-circle#brown {
+      background: #746354;
+    }
+    main #filter .ui-group .button-group .color-circle#red {
+      background: #99382d;
+    }
+    main #filter .ui-group .button-group .color-circle#grey {
+      background: #c9c9c9;
+    }
+    main #filter .ui-group:nth-of-type(2) .button-group {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-content: center;
+      
+      margin-bottom: 30px;
+    }
+    main #items {
+      padding-top: 50px;
+      padding-right: 30px;
+      padding-bottom: 80px;
+      width: 80%;
+      min-height: 100vh;
+      
+      position: absolute;
+      /* top: 0; */
+      right: 0;
+    }
+    main #items .filter-info {
+      width: 100%;
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      z-index: 1;
+    }
+    main #items .filter-info #filter-display-container {
+      margin-left: 30px;
+      color: #777777;
+      font-weight: 300;
+      display: flex;
+      flex-direction: column;
+    }
+    main #items .filter-info #filter-display-container #category-filter-display {
+      font-size: 2rem;
+      margin: 0;
+    }
+    main #items .filter-info #filter-display-container #color-filter-display {
+      margin-top: 10px;
+      margin-bottom: 0;
+    }
+    main #items .filter-info #filter-count-container {
+      color: #777777;
+      font-weight: 300;
+    }
+    main #items #no-items-container {
+      width: 100%;
+      height: 0;
+      overflow: hidden;
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+    }
+    main #items #no-items-container #no-items-text {
+      font-size: 1.2rem;
+    }
+    main #items .grid {
+      width: 100%;
+    }
+    main #items .grid .grid-item {
+      width: 33.33%;
+      height: 334.03px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 50px;
+      color: #777777;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    main #items .grid .grid-item:hover .item-name, main #items .grid .grid-item:hover .item-price {
+      opacity: 0.5;
+    }
+    main #items .grid .grid-item img {
+      width: 80%;
+      max-width: 440px;
+      object-fit: cover;
+      height: 378px;
+    }
+    main #items .grid .grid-item .item-name {
+      width: 80%;
+      text-align: center;
+      font-weight: 300;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease-in-out;
+      line-height: 1.5;
+      background: aliceblue;
+        position: absolute;
+        bottom: 20px;
+    }
+    main #items .grid .grid-item .item-price {
+      font-weight: 100;
+      font-style: italic;
+      font-size: 0.7rem;
+      margin-top: 20px;
+      letter-spacing: 1px;
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+        bottom: 0;
+    }
+    footer {
+      padding: 30px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #777777;
+      background: #fff;
+      z-index: 1;
+      transition: bottom 0.5s ease-in-out;
+    }
+    footer #back-to-top-btn {
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      cursor: pointer;
+      border: 1px solid #777777;
+      position: relative;
+      bottom: -100px;
+      transition: bottom 0.5s ease-in-out;
+    }
+    footer #back-to-top-btn.show {
+      bottom: 0;
+    }
+    footer #logo {
+      width: 75px;
+      text-decoration: none;
+    }
+    footer #logo img {
+      width: 100%;
+    }
+    footer p {
+      font-size: 0.9rem;
+      padding: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      opacity: 0.5;
+      transition: opacity 0.2s ease-in-out;
+    }
+    footer p:hover {
+      opacity: 1;
+    }
+    footer p.active {
+      opacity: 1;
+    }
+    footer #cart {
+      font-size: 0.9rem;
+      padding: 10px 35px;
+      cursor: pointer;
+      border: 1px solid #777777;
+      border-radius: 20px;
+    }
+    
+    
+    .hamburger{
+      background: transparent;
+      cursor: pointer;
+      border: 0;
+      color: black;
+      font-size: 20px;
+      display: none;
+    }
+    .hamburger:hover{
+      cursor: pointer;
+    }
+    
+    @media screen and (max-width: 832px){
+    
+      
+    
+    main #items .grid .grid-item {
+      width: 45.33%;
+      height: 334.03px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 50px;
+      color: #777777;
+      cursor: pointer;
+      overflow: hidden;
+    
+    }
+    
+    
+    }
+      
+    
+    
+    @media screen and (max-width: 992px){
+     
+      .filter{
+        display: none;
+    
+    }
+    .hamburger{
+      display: flex;
+      z-index: 1000;
+      position: fixed;
+    }
+    
+    
+    .filter.show{
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+        background: greenyellow;
+        width: 50%;
+        z-index: 999;
+        width: auto!important;
+    }
+    
+    .hamburger.up{
+      top: 0;
+      transition: ease  ;
+    }
+    
+     
+     
+     
+      .grid-item {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    main #items {
+      padding-top: 50px;
+      padding-right: 30px;
+      padding-bottom: 80px;
+      width: 100% !important; 
+      min-height: 100vh;
+     
+      position: absolute;
+      /* top: 0; */
+      right: 0;
+    }
+    main #items .grid .grid-item {
+      width: 48.33%;
+      height: 334.03px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 50px;
+      color: #777777;
+      cursor: pointer;
+      overflow: hidden;}
+    }
+    
+    
+    
+        </style>
+    <main>
+  
+    
+ 
+  <section class='filter' id="filter">
+
+        
+        
+        <div class="py-4 ui-group">
+          <input id="category" type="checkbox">
+          <label id="category-label" for="category"><i class="fas fa-caret-down"></i> Ürünler</label>
+          <div id="category-button-group" class="button-group js-radio-button-group" data-filter-group="category">
+            <div>
+              <input type="checkbox" value="*" id="all" />
+              <label class="button is-checked" for="all">Bütün Ürünler</label>
+            </div> 
+            <% prod.forEach(product => { %>  
+           
+            <div>
+              <input type="checkbox" value=".<%=product.kategori%>" id="<%=product.kategori%>" />
+              <label class="button" for="<%=product.kategori%>"><%=product.kategori%></label>
+            </div>
+           
+            <%  })%>
+            
+          </div>
+        </div>
+        
+        <div class="py-4 ui-group">
+          <input id="color" type="checkbox">
+          <label id="color-label" for="color"><i class="fas fa-caret-down"></i> Color</label>
+          <div id="color-button-group" class="button-group js-radio-button-group" data-filter-group="color">
+            <div id="grey" class="color-circle button" data-filter=".grey"></div>
+            <div id="red" class="color-circle button" data-filter=".red"></div>  
+            <div id="green" class="color-circle button" data-filter=".green"></div>
+            <div id="blue" class="color-circle button" data-filter=".blue"></div>
+            <div id="brown" class="color-circle button" data-filter=".brown"></div>
+            <div id="black" class="color-circle button" data-filter=".black"></div>
+            <div id="camo" class="color-circle button" data-filter=".camo"></div>
+          </div>
+        </div> 
+        
+      </section>
+     
+      <section id="items">
+        <div class="py-4 filter-info">
+          <div id="filter-display-container">
+            <p id="category-filter-display"></p>
+            <p id="color-filter-display"></p>
+          </div>
+          <div id="filter-count-container">
+            <p id="initial-filter-count"></p>
+            <p id="updated-filter-count"></p>
+          </div>
+        </div>
+        <div id="no-items-container">
+          <p id="no-items-text">No items matched this filter. Please try another.</p>
+        </div>
+        <div class="grid">
+          <% prod.forEach(product => { %>  
+            
+          <div class="grid-item <%=product.kategori%>">
+            <img src="<%=product.cdn%>" alt="" />
+            <h4 class="item-name"><%=product.title%></h4>
+            
+            <h5 class="item-price"><%=product.price%> ₺</h5>
+          </div>     <%  })%></div>
+      </section>
+    </main>
+    
+    <footer>
+      <i id="back-to-top-btn" class="fas fa-angle-up" aria-hidden="true"></i>
+      
+      <p>Help</p>
+      <p>Terms</p>
+      <p>Sign Up</p>
+      <a id="logo" href="/">
+        <img src="https://s20.postimg.cc/8rsxvbezx/logo.png" alt="logo">
+      </a>
+      <p class="active">Shop</p>
+      <p>About</p>
+      <p>Contact</p>
+      
+      <i id="cart" class="fas fa-shopping-bag"></i>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/index.js"></script>
+
+    <script>$(document).ready(function(){
+
+        backToTopButton();
+        
+        defaultFilter();
+        
+        addIdentifiers();
+        
+        initialFilterCount();
+        
+        updateFilterDisplay();
+        
+        // items grid and its settings
+        var $grid = $('.grid').imagesLoaded( function() {
+          // init Isotope after all images have loaded
+          $grid.isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            layoutMode: 'fitRows'
+          });
+        });
+        
+        // filter items
+        var filters = {};
+        // do filtering on category button change
+        $('#category-button-group').on( 'click', function( event ) {
+          var checkbox = event.target;
+          var $checkbox = $( checkbox );
+          var group = $checkbox.parents('.button-group').attr('data-filter-group');
+          // create array for filter group, if not there yet
+          var filterGroup = filters[ group ];
+          if ( !filterGroup ) {
+            filterGroup = filters[ group ] = [];
+          }
+          // add/remove filter
+          if ( checkbox.checked ) {
+            // add filter
+            filterGroup.push( checkbox.value );
+          } else {
+            // remove filter
+            var index = filterGroup.indexOf( checkbox.value );
+            filterGroup.splice( index, 1 );
+          }
+          
+          var comboFilter = getComboFilter();
+          $grid.isotope({ filter: comboFilter });    
+          
+          checkIfItems();
+          updateFilterCount();
+          updateFilterDisplay();
+          $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });  
+        // do filtering on color button change
+        $('#color-button-group').on( 'click', function( event ) {
+          var checkbox = event.target;
+          var $checkbox = $( checkbox );
+          var group = $checkbox.parents('.button-group').attr('data-filter-group');
+          // create array for filter group, if not there yet
+          var filterGroup = filters[ group ];
+          if ( !filterGroup ) {
+            filterGroup = filters[ group ] = [];
+          }
+          // add/remove filter
+          if ( $(checkbox).hasClass('is-checked') ) {
+            // add filter
+            filterGroup.push( $(checkbox).attr('data-filter') );
+          } else {
+            // remove filter
+            var index = filterGroup.indexOf( $(checkbox).attr('data-filter') );
+            filterGroup.splice( index, 1 );
+          }
+          
+          var comboFilter = getComboFilter();
+          $grid.isotope({ filter: comboFilter });
+          
+          checkIfItems();
+          updateFilterCount();
+          updateFilterDisplay();
+          $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });
+        
+        // change 'is-checked' class on buttons for filters
+        $('#category-button-group').on( 'click', '.button', function( event ) {
+          $('#category-button-group').find('.is-checked').removeClass('is-checked');
+          var $button = $( event.currentTarget );
+          $button.addClass('is-checked');
+          // removes checked property of buttons that are not selected. acts like a set of radio buttons
+          var $checkboxes = $('#category-button-group div input[type=checkbox]');
+          $checkboxes.prop('checked', false)
+        });
+        
+        $('#color-button-group').on( 'click', '.button', function( event ) {
+          var $button = $( event.currentTarget );
+          $button.toggleClass('is-checked');
+        });
+        
+        function backToTopButton() {
+          var btt = $('#back-to-top-btn');
+        
+          // shows button after scroll position
+          $(window).scroll(function() {
+            if ($('body').scrollTop() > 100 || $('html').scrollTop() > 100) {
+              btt.addClass('show');
+            } else {
+              btt.removeClass('show');
+            }
+          });
+        
+          // button animation back to top
+          btt.click(function() {
+            $('body').animate({scrollTop: 0}, 500);
+            $('html').animate({scrollTop: 0}, 500);
+          });
+        }
+      
+        function defaultFilter() {
+          // filter for 'all' categories is selected at start
+          $('#category-button-group div #all').prop('checked', true);
+        }
+        
+        function addIdentifiers() {
+          // add identifiers (such as title and alt text) to each item in grid based on their title
+          var $items = $('.grid-item');
+          $items.map(function() {
+            // adds title to item so the item name is displayed when hovered on
+            $(this).attr('title', $(this).children('.item-name').html().toUpperCase());
+            $(this).children('img').attr('alt', $(this).children('.item-name').html().toUpperCase());
+          });
+          
+          // add identifier (a title) to each category filter based on their type
+          var $categoreies = $('#category-button-group div .button');
+          $categoreies.map(function() {
+            // adds title to category so the color name is displayed when hovered on
+            $(this).attr('title', $(this).html().toUpperCase());
+          });
+          
+          // add identifier (a title) to each color filter based on their color
+          var $colors = $('#color-button-group .color-circle');
+          $colors.map(function() {
+            // adds title to color so the color name is displayed when hovered on
+            $(this).attr('title', $(this).attr('id').toUpperCase());
+          });
+        }
+        
+        function initialFilterCount() {
+          var $filterCount = $('#initial-filter-count');
+          var $grid = $('.grid');
+          var iso = $grid.data('isotope');
+          $filterCount.text( $grid.children('.grid-item').length + ' Ürün' );
+        }
+        
+        function updateFilterCount() {
+          $('#initial-filter-count').css('display', 'none')
+          $('#updated-filter-count').css('display', 'block')
+          var $filterCount = $('#updated-filter-count');
+          var $grid = $('.grid');
+          var iso = $grid.data('isotope');
+          $filterCount.text( iso.filteredItems.length + ' Ürün' );
+        }
+        
+        function getComboFilter() {
+          var combo = [];
+          for ( var prop in filters ) {
+            var group = filters[ prop ];
+            if ( !group.length ) {
+              // no filters in group, carry on
+              continue;
+            }
+            // add first group
+            if ( !combo.length ) {
+              combo = group.slice(0);
+              continue;
+            }
+            // add additional groups
+            var nextCombo = [];
+            // split group into combo: [ A, B ] & [ 1, 2 ] => [ A1, A2, B1, B2 ]
+            for ( var i=0; i < combo.length; i++ ) {
+              for ( var j=0; j < group.length; j++ ) {
+                var item = combo[i] + group[j];
+                nextCombo.push( item );
+              }
+            }
+            combo = nextCombo;
+          }
+          var comboFilter = combo.join(', ');
+          return comboFilter;
+        }
+        
+        function updateFilterDisplay() {
+          // display applied filters
+          var $categoryDisplay = $('#category-filter-display');
+          var $colorDisplay = $('#color-filter-display');
+          
+          var $activeCategory = $('#category-button-group div .is-checked').html().toUpperCase();
+          
+          var $activeColors = $('#color-button-group .is-checked');
+          var $activeColorsList = [];
+          $activeColors.map(function() {
+            if ( $activeColorsList.length > 0 ) {
+              $activeColorsList.push( ' + ' );
+            }
+            
+            $activeColorsList.push( $(this).attr('id').toUpperCase() );
+          });
+          
+          $categoryDisplay.html($activeCategory);
+          $colorDisplay.html($activeColorsList);
+        }
+        
+        function checkIfItems() {
+          // presents text to the user, notifying them that their filter options brought back no items
+          var noItemsText = $('#no-items-container');
+          if ( $('.grid').css('height') == '0px' ) {
+            noItemsText.css('height', 'auto');
+            noItemsText.css('margin-top', '10vh');
+          } else {
+            noItemsText.css('height', '0');
+            noItemsText.css('margin-top', '0');
+          }
+          
+          updateFilterCount()
+        }
+        
+      });
+      </script>
+   <script src="../assetsindex/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const hamburger =document.getElementById("hamburger")
+  const filter =    document.getElementById('filter')
+
+
+
+  hamburger.addEventListener('click',()=>{
+    console.log(hamburger)
+
+filter.classList.toggle('show')
+hamburger.classList.toggle('up')
+  })
+</script>
+  </body>
+</html>

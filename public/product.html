@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,700');
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #fff;
+  color: #1e1e1e;
+  font-family: 'Lato', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+}
+main {
+  margin: 0 30px 80px 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+main #filter {
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 150px;
+  padding-left: 30px;
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  border-right: 1px solid #777777;
+  user-select: none;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+main #filter .ui-group {
+  border-bottom: 1px solid #777777;
+}
+main #filter .ui-group input {
+  display: none;
+}
+main #filter .ui-group label {
+  display: block;
+  padding: 30px 0;
+  cursor: pointer;
+}
+main #filter .ui-group label#category-label {
+  padding-top: 0;
+}
+main #filter .ui-group label i {
+  margin-right: 30px;
+  font-size: 1.2rem;
+  transition: all 0.2s ease-in-out;
+}
+main #filter .ui-group #category:checked + label > i {
+  transform: rotate(-90deg);
+}
+main #filter .ui-group #category:checked ~ .button-group {
+  height: 0;
+}
+main #filter .ui-group #color:checked + label > i {
+  transform: rotate(-90deg);
+}
+main #filter .ui-group #color:checked ~ .button-group {
+  height: 0;
+  margin-bottom: 0;
+}
+main #filter .ui-group .button-group {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 250px;
+  transition: height 0.2s ease-in-out;
+}
+main #filter .ui-group .button-group div {
+  margin-bottom: 30px;
+}
+main #filter .ui-group .button-group input {
+  display: none;
+}
+main #filter .ui-group .button-group .button {
+  padding: 10px;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+main #filter .ui-group .button-group .button.is-checked {
+  opacity: 1;
+}
+main #filter .ui-group .button-group .button:hover {
+  opacity: 1;
+}
+main #filter .ui-group .button-group .color-circle {
+  margin: 10px;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+main #filter .ui-group .button-group .color-circle#camo {
+  background: url('https://s20.postimg.cc/top5zzkql/camo.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+main #filter .ui-group .button-group .color-circle#green {
+  background: #5c8464;
+}
+main #filter .ui-group .button-group .color-circle#black {
+  background: #292826;
+}
+main #filter .ui-group .button-group .color-circle#blue {
+  background: #637db7;
+}
+main #filter .ui-group .button-group .color-circle#brown {
+  background: #746354;
+}
+main #filter .ui-group .button-group .color-circle#red {
+  background: #99382d;
+}
+main #filter .ui-group .button-group .color-circle#grey {
+  background: #c9c9c9;
+}
+main #filter .ui-group:nth-of-type(2) .button-group {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 80px;
+  margin-bottom: 30px;
+}
+main #items {
+  padding-top: 50px;
+  padding-right: 30px;
+  padding-bottom: 80px;
+  width: 80%;
+  min-height: 100vh;
+  width: 80%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+main #items .filter-info {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 1;
+}
+main #items .filter-info #filter-display-container {
+  margin-left: 30px;
+  color: #777777;
+  font-weight: 300;
+  display: flex;
+  flex-direction: column;
+}
+main #items .filter-info #filter-display-container #category-filter-display {
+  font-size: 2rem;
+  margin: 0;
+}
+main #items .filter-info #filter-display-container #color-filter-display {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+main #items .filter-info #filter-count-container {
+  color: #777777;
+  font-weight: 300;
+}
+main #items #no-items-container {
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+}
+main #items #no-items-container #no-items-text {
+  font-size: 1.2rem;
+}
+main #items .grid {
+  width: 100%;
+}
+main #items .grid .grid-item {
+  width: 33.33%;
+  height: 334.03px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  color: #777777;
+  cursor: pointer;
+  overflow: hidden;
+}
+main #items .grid .grid-item:hover .item-name, main #items .grid .grid-item:hover .item-price {
+  opacity: 0.5;
+}
+main #items .grid .grid-item img {
+  width: 80%;
+  max-width: 440px;
+}
+main #items .grid .grid-item .item-name {
+  width: 80%;
+  text-align: center;
+  font-weight: 300;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+  line-height: 1.5;
+}
+main #items .grid .grid-item .item-price {
+  font-weight: 100;
+  font-style: italic;
+  font-size: 0.7rem;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+}
+footer {
+  padding: 30px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #777777;
+  background: #fff;
+  z-index: 1;
+  transition: bottom 0.5s ease-in-out;
+}
+footer #back-to-top-btn {
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: 1px solid #777777;
+  position: relative;
+  bottom: -100px;
+  transition: bottom 0.5s ease-in-out;
+}
+footer #back-to-top-btn.show {
+  bottom: 0;
+}
+footer #logo {
+  width: 75px;
+  text-decoration: none;
+}
+footer #logo img {
+  width: 100%;
+}
+footer p {
+  font-size: 0.9rem;
+  padding: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+}
+footer p:hover {
+  opacity: 1;
+}
+footer p.active {
+  opacity: 1;
+}
+footer #cart {
+  font-size: 0.9rem;
+  padding: 10px 35px;
+  cursor: pointer;
+  border: 1px solid #777777;
+  border-radius: 20px;
+}
+
+    </style>
+     <link rel="stylesheet" href="style.css">
+     <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="main.css">
+     <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+ 
+ 
+ 
+     <link rel="stylesheet" href="../css/fontAwesome.css"> 
+     <link rel="stylesheet" href="../css/hero-slider.css"> 
+     <link rel="stylesheet" href="../css/owl-carousel.css"> 
+     <link rel="stylesheet" href="../css/datepicker.css"> 
+     <link rel="stylesheet" href="../css/templatemo-style.css"> 
+     <!-- font awesome -->
+     <script src="https://kit.fontawesome.com/dbed6b6114.js" crossorigin="anonymous"></script>
+     <script src="vanilla.js"></script>
+     
+ 
+     <!-- froala-->
+ 
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-design-blocks/2.0">
+</head>
+<body>
+    <nav> 
+        <div class="logo">Hatay Yöresel</div>
+        <input type="checkbox" id="click">
+        <label for="click" class="menu-btn">
+          <i class="fas fa-bars"></i>
+        </label>
+        <ul>
+          <li><a class="active" href="#">Anasayfa</a></li>
+          <li><a href="#">Hakkımızda</a></li>
+          <li><a href="#">Ürünler</a></li>
+          <li><a href="#">Gallery</a></li>
+          <li><a href="#">İletişim</a></li>
+        </ul>
+      </nav> 
+    <main>
+      <section id="filter">
+        
+        <div class="ui-group">
+          <input id="category" type="checkbox">
+          <label id="category-label" for="category"><i class="fas fa-caret-down"></i> Kategori</label>
+          <div id="category-button-group" class="button-group js-radio-button-group" data-filter-group="category">
+            <div>
+              <input type="checkbox" value="*" id="all" />
+              <label class="button is-checked" for="all">Bütün Ürünler</label>
+            </div> 
+            <div>
+              <input type="checkbox" value=".new" id="new" />
+              <label class="button" for="new">New Arrivals</label>
+            </div>
+            <div>
+              <input type="checkbox" value=".women" id="women" />
+              <label class="button" for="women">Women</label>
+            </div>
+            <div>
+                <input type="checkbox" value=".bal" id="men" />
+                <label class="button" for="men">Bal</label>
+              </div>
+            <div>
+              <input type="checkbox" value=".men" id="men" />
+              <label class="button" for="men">Men</label>
+            </div>
+           
+          </div>
+        </div>
+        
+        <div class="ui-group">
+          <input id="color" type="checkbox">
+          <label id="color-label" for="color"><i class="fas fa-caret-down"></i> Color</label>
+          <div id="color-button-group" class="button-group js-radio-button-group" data-filter-group="color">
+            <div id="grey" class="color-circle button" data-filter=".grey"></div>
+            <div id="red" class="color-circle button" data-filter=".red"></div>  
+            <div id="green" class="color-circle button" data-filter=".green"></div>
+            <div id="blue" class="color-circle button" data-filter=".blue"></div>
+            <div id="brown" class="color-circle button" data-filter=".brown"></div>
+            <div id="black" class="color-circle button" data-filter=".black"></div>
+            <div id="camo" class="color-circle button" data-filter=".camo"></div>
+          </div>
+        </div> 
+        
+      </section>
+      
+      <section id="items">
+        <div class="filter-info">
+          <div id="filter-display-container">
+            <p id="category-filter-display"></p>
+            <p id="color-filter-display"></p>
+          </div>
+          <div id="filter-count-container">
+            <p id="initial-filter-count"></p>
+            <p id="updated-filter-count"></p>
+          </div>
+        </div>
+        <div id="no-items-container">
+          <p id="no-items-text">No items matched this filter. Please try another.</p>
+        </div>
+        <div class="grid">
+          <div class="grid-item new bal brown">
+            <img src="https://cdn.pixabay.com/photo/2016/11/23/13/46/honey-1852934_960_720.jpg" alt="" />
+            <h4 class="item-name">Men's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new men red">
+            <img src="https://cdn.pixabay.com/photo/2016/11/23/13/46/honey-1852934_960_720.jpg" alt="" />
+            <h4 class="item-name">Men's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new men brown">
+            <img src="https://cdn.pixabay.com/photo/2016/11/23/13/46/honey-1852934_960_720.jpg" alt="" />
+            <h4 class="item-name">Men's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6WF6004.213_01_440x.jpg?v=1520903146" alt="" />
+            <h4 class="item-name">Women's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6WF6004.214_01_55e30690-3ae4-4042-a86c-3a108e7c457a_440x.jpg?v=1520961338" alt="" />
+            <h4 class="item-name">Women's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new women red">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6WF6004.217_01_440x.jpg?v=1520903151" alt="" />
+            <h4 class="item-name">Women's Nylon Slipper</h4>
+            <h5 class="item-price">$150</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1003-GHOST_01_440x.jpg?v=1530291722" alt="" />
+            <h4 class="item-name">Racerback Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1003-HILLS_01_440x.jpg?v=1531498467" alt="" />
+            <h4 class="item-name">Racerback Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1003-MILITARY_01_440x.jpg?v=1531499480" alt="" />
+            <h4 class="item-name">Racerback Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1003-GRAVEL_01_440x.jpg?v=1531499235" alt="" />
+            <h4 class="item-name">Racerback Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U3016.075-HILLS_01_440x.jpg?v=1526579217" alt="" />
+            <h4 class="item-name">Sweatshorts</h4>
+            <h5 class="item-price">$240</h5>
+          </div>
+          <div class="grid-item new men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U3016-GRAVEL_01_440x.jpg?v=1530287252" alt="" />
+            <h4 class="item-name">Sweatshorts</h4>
+            <h5 class="item-price">$240</h5>
+          </div>
+          <div class="grid-item new men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U3016_Core_01_440x.jpg?v=1526582677" alt="" />
+            <h4 class="item-name">Sweatshorts</h4>
+            <h5 class="item-price">$240</h5>
+          </div>
+          <div class="grid-item new women grey">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1084-336-GHOST_734914f8-bcc2-49fd-97c4-1d1c35450cac_440x.jpg?v=1516315040" alt="" />
+            <h4 class="item-name">Knit Bandeau</h4>
+            <h5 class="item-price">$280</h5>
+          </div>
+          <div class="grid-item new women red">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W3056.337-AKIRA_01_440x.jpg?v=1525814456" alt="" />
+            <h4 class="item-name">Mini Skirt</h4>
+            <h5 class="item-price">$500</h5>
+          </div>
+          <div class="grid-item new women red">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W4023-AKIRA_01_440x.jpg?v=1530808446" alt="" />
+            <h4 class="item-name">Knit Tank Dress Akira</h4>
+            <h5 class="item-price">$800</h5>
+          </div>
+          <div class="grid-item new women grey">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1060-GHOST_01_440x.jpg?v=1531151310" alt="" />
+            <h4 class="item-name">Shrunken Tee</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZW1060-HILLS_01_440x.jpg?v=1531151364" alt="" />
+            <h4 class="item-name">Shrunken Tee</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new women green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZW1060-MILITARY_01_440x.jpg?v=1531151397" alt="" />
+            <h4 class="item-name">Shrunken Tee Military</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZW1060-CORE_01_440x.jpg?v=1531151196" alt="" />
+            <h4 class="item-name">Shrunken Tee</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2064-CORE_01_440x.jpg?v=1530248277" alt="" />
+            <h4 class="item-name">Workwear Shirt</h4>
+            <h5 class="item-price">$500</h5>
+          </div>
+          <div class="grid-item new men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2064-SAGE_01_6982a997-ea64-4a96-a2bf-732ef85e1053_440x.jpg?v=1524203537" alt="" />
+            <h4 class="item-name">Workwear Shirt</h4>
+            <h5 class="item-price">$500</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U1055-MILITARY_01_440x.jpg?v=1525391033" alt="" />
+            <h4 class="item-name">Classic T-Shirt</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U1055-HILLS_01_440x.jpg?v=1525706102" alt="" />
+            <h4 class="item-name">Classic T-Shirt</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U1055.391-GRAVEL_01_da8164b8-12a9-4360-9db4-a212126153cb_440x.jpg?v=1524244279" alt="" />
+            <h4 class="item-name">Classic T-Shirt</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U1055.391-CORE_01_c3db0983-bb77-4d03-bb0e-5f1315892c27_440x.jpg?v=1524244344" alt="" />
+            <h4 class="item-name">Classic T-Shirt</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/image1_2_440x.jpg?v=1516316800" alt="" />
+            <h4 class="item-name">Mock Neck Tee</h4>
+            <h5 class="item-price">$180</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1058-HILLS_01_440x.jpg?v=1528126478" alt="" />
+            <h4 class="item-name">Mock Neck Tee</h4>
+            <h5 class="item-price">$180</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1058-TRENCH_01_440x.jpg?v=1528500089" alt="" />
+            <h4 class="item-name">Mock Neck Tee</h4>
+            <h5 class="item-price">$180</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1058-CORE_01_440x.jpg?v=1527794691" alt="" />
+            <h4 class="item-name">Mock Neck Tee</h4>
+            <h5 class="item-price">$180</h5>
+          </div>
+          <div class="grid-item new women blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W2016.075-GLACIER_01_440x.jpg?v=1529949391" alt="" />
+            <h4 class="item-name">Womens Hoodie</h4>
+            <h5 class="item-price">$300</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W2016.075-TRENCH_01_33ec34ec-158d-4f67-b7d3-1721f63cd8df_440x.jpg?v=1529615144" alt="" />
+            <h4 class="item-name">Womens Hoodie</h4>
+            <h5 class="item-price">$300</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W2116-075-CORE-01_440x.jpg?v=1528127619" alt="" />
+            <h4 class="item-name">Womens Hoodie</h4>
+            <h5 class="item-price">$300</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W2015-Trench-01_440x.jpg?v=1528127574" alt="" />
+            <h4 class="item-name">Womens Zip-Up Hoodie</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W2015-CORE_01_440x.jpg?v=1527712400" alt="" />
+            <h4 class="item-name">Womens Zip-Up Hoodie</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2059-075-TRENCH-01_440x.jpg?v=1516317541" alt="" />
+            <h4 class="item-name">Unisex Zip-Up Hoodie</h4>
+            <h5 class="item-price">$360</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2059-GRAVEL_01_440x.jpg?v=1527712157" alt="" />
+            <h4 class="item-name">Unisex Zip-Up Hoodie</h4>
+            <h5 class="item-price">$360</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2059-075-CORE-01_440x.jpg?v=1525732344" alt="" />
+            <h4 class="item-name">Unisex Zip-Up Hoodie</h4>
+            <h5 class="item-price">$360</h5>
+          </div>
+          <div class="grid-item new women men blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2051-GLACIER_01_440x.jpg?v=1526576023" alt="" />
+            <h4 class="item-name">Unisex Classic Hoodie</h4>
+            <h5 class="item-price">$320</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U62051-TRENCH_01_440x.jpg?v=1527712793" alt="" />
+            <h4 class="item-name">Unisex Classic Hoodie</h4>
+            <h5 class="item-price">$320</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/LOOK7-MENS-HOODIE-01_440x.jpg?v=1527636579" alt="" />
+            <h4 class="item-name">Unisex Classic Hoodie</h4>
+            <h5 class="item-price">$320</h5>
+          </div>
+          <div class="grid-item new women men blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/LOOK9-MENS-YZ6U3019-GLACIER-01_440x.jpg?v=1526583334" alt="" />
+            <h4 class="item-name">Unisex Sweatpants</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/LOOK1-MENS-YZ6U3019-TRENCH-01_440x.jpg?v=1525732035" alt="" />
+            <h4 class="item-name">Unisex Sweatpants</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/MENS-YZ6U3019-GRAVEL-01_980x_c215a67a-2d3a-467a-836e-b39e0f773de4_440x.jpg?v=1530907170" alt="" />
+            <h4 class="item-name">Unisex Sweatpants</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/MENS-YZ6U3019-CORE-01_1600_440x.jpg?v=1526583056" alt="" />
+            <h4 class="item-name">Unisex Sweatpants</h4>
+            <h5 class="item-price">$340</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W3055-182-TRENCH-01_440x.jpg?v=1516316248" alt="" />
+            <h4 class="item-name">Leggings</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W3055-182-CORE-01_440x.jpg?v=1516316197" alt="" />
+            <h4 class="item-name">Leggings</h4>
+            <h5 class="item-price">$140</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W0002-SAND_01_440x.jpg?v=1530767475" alt="" />
+            <h4 class="item-name">Workwear Jumpsuit</h4>
+            <h5 class="item-price">$760</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U0002-CORE_01_440x.jpg?v=1530767457" alt="" />
+            <h4 class="item-name">Workwear Jumpsuit</h4>
+            <h5 class="item-price">$760</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W4225-182-TRENCH-01_7da28019-b38c-4561-8860-4672aa9f3176_440x.jpg?v=1516314574" alt="" />
+            <h4 class="item-name">Crewneck Dress</h4>
+            <h5 class="item-price">$500</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W4225-CORE-01_440x.jpg?v=1530031536" alt="" />
+            <h4 class="item-name">Crewneck Dress</h4>
+            <h5 class="item-price">$500</h5>
+          </div>
+          <div class="grid-item new women men blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2067-GLACIER_01_440x.jpg?v=1526589126" alt="" />
+            <h4 class="item-name">Crewneck</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2067-HILLS_01_440x.jpg?v=1525118871" alt="" />
+            <h4 class="item-name">Crewneck</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2067-GRAVEL_01_440x.jpg?v=1525732885" alt="" />
+            <h4 class="item-name">Crewneck</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2067-CORE_01_440x.jpg?v=1525120964" alt="" />
+            <h4 class="item-name">Crewneck</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2054-TRENCH_01_9d82279b-adba-4543-aee6-8f49891bc226_440x.jpg?v=1528756496" alt="" />
+            <h4 class="item-name">Mock Neck Sweatshirt</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2054-HILLS_01_440x.jpg?v=1527815926" alt="" />
+            <h4 class="item-name">Mock Neck Sweatshirt</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2054-CORE_01_440x.jpg?v=1527815912" alt="" />
+            <h4 class="item-name">Mock Neck Sweatshirt</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1057-GLACIER_01_440x.jpg?v=1526507666" alt="" />
+            <h4 class="item-name">Womens Printed Thermal</h4>
+            <h5 class="item-price">$220</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1057-TRENCH_01_440x.jpg?v=1526592560" alt="" />
+            <h4 class="item-name">Womens Printed Thermal</h4>
+            <h5 class="item-price">$220</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1057-GRAVEL_01_440x.jpg?v=1526507700" alt="" />
+            <h4 class="item-name">Womens Printed Thermal</h4>
+            <h5 class="item-price">$220</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1066-324-CORE-01_440x.jpg?v=1516314819" alt="" />
+            <h4 class="item-name">Half Zip Henley</h4>
+            <h5 class="item-price">$200</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U2067-CORE_01_bcd049d1-37fd-431b-ac90-91a96472604a_440x.jpg?v=1525731712" alt="" />
+            <h4 class="item-name">Calabasas Long Sleeve T-Shirt</h4>
+            <h5 class="item-price">$240</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1103-258-CORE-01_440x.jpg?v=1516317408" alt="" />
+            <h4 class="item-name">Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women grey">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1103-258-Military-01_440x.jpg?v=1526572742" alt="" />
+            <h4 class="item-name">Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W1103.258-TRENCH_01_440x.jpg?v=1526573471" alt="" />
+            <h4 class="item-name">Tank Top</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6123-226-OAK-01_440x.jpg?v=1516314534" alt="" />
+            <h4 class="item-name">Carpenter Coat</h4>
+            <h5 class="item-price">$1000</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6098-BLACKBROWN_01_b874d05e-634a-4cb0-8694-9167468697c5_440x.jpg?v=1524242372" alt="" />
+            <h4 class="item-name">Flannel Lined Denim Jacket</h4>
+            <h5 class="item-price">$900</h5>
+          </div>
+          <div class="grid-item new women men blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6132-226-GLACIER-01_440x.jpg?v=1516314753" alt="" />
+            <h4 class="item-name">Flannel Lined Canvas Jacket</h4>
+            <h5 class="item-price">$900</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6098-MEDIUMBLUE_01_77308c2a-917e-4175-bbf9-d5f5a8d81759_440x.jpg?v=1524195071" alt="" />
+            <h4 class="item-name">Flannel Lined Denim Jacket</h4>
+            <h5 class="item-price">$900</h5>
+          </div>
+          <div class="grid-item new women black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6W5014-BLACKBROWN_01_440x.jpg?v=1530226590" alt="" />
+            <h4 class="item-name">5 Pocket Women's Denim</h4>
+            <h5 class="item-price">$480</h5>
+          </div>
+          <div class="grid-item new men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6M5012-MEDIUMBLUE_01_a4cbaa8a-e95d-4705-be6a-dfa5b5e74758_440x.jpg?v=1524203219" alt="" />
+            <h4 class="item-name">5 Pocket Men's Denim</h4>
+            <h5 class="item-price">$480</h5>
+          </div>
+          <div class="grid-item new men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6M5012-BLACKBROWN_01_440x.jpg?v=1530226191" alt="" />
+            <h4 class="item-name">5 Pocket Men's Denim</h4>
+            <h5 class="item-price">$480</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U5006.268-UMBER_01_1b43612d-587d-4d58-905b-7259067b1824_440x.jpg?v=1524204125" alt="" />
+            <h4 class="item-name">Cotton Jogger</h4>
+            <h5 class="item-price">$260</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6116.268-UMBER_01_32e680e7-a8f8-43fe-8e88-6dc1abbd8ecb_440x.jpg?v=1524204040" alt="" />
+            <h4 class="item-name">Anorak Half Zip</h4>
+            <h5 class="item-price">$580</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6131.226-COMRADE_01_440x.jpg?v=1530290443" alt="" />
+            <h4 class="item-name">Heavy Cargo Parka</h4>
+            <h5 class="item-price">$1100</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6104.001-TRENCH_01_440x.jpg?v=1528127109" alt="" />
+            <h4 class="item-name">Military Coat</h4>
+            <h5 class="item-price">$1400</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U6009-Sand_01_440x.jpg?v=1525716029" alt="" />
+            <h4 class="item-name">Trench Coat</h4>
+            <h5 class="item-price">$720</h5>
+          </div>
+          <div class="grid-item new men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6MF6003.213_01_440x.jpg?v=1520903158" alt="" />
+            <h4 class="item-name">Thick Suede Desert Boot</h4>
+            <h5 class="item-price">$295</h5>
+          </div>
+          <div class="grid-item new men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6MF6003.214_01_440x.jpg?v=1520903165" alt="" />
+            <h4 class="item-name">Thick Suede Desert Boot</h4>
+            <h5 class="item-price">$295</h5>
+          </div>
+          <div class="grid-item new men camo">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6MF6007.122_01_440x.jpg?v=1520903127" alt="" />
+            <h4 class="item-name">Washed Canvas Military Boot Splinter Camo</h4>
+            <h5 class="item-price">$350</h5>
+          </div>
+          <div class="grid-item new women men blue">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U7004-GLACIER-03_440x.jpg?v=1516314866" alt="" />
+            <h4 class="item-name">Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U7004-GRAVEL-01_440x.jpg?v=1516314944" alt="" />
+            <h4 class="item-name">Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6U7003_01_a83110a4-3b95-4bb5-b273-7952627e5aef_440x.jpg?v=1524189242" alt="" />
+            <h4 class="item-name">Web Belt</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UGB1.214_02_440x.jpg?v=1520903167" alt="" />
+            <h4 class="item-name">Gym Bag</h4>
+            <h5 class="item-price">$250</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UGB1.215_02_440x.jpg?v=1520903169" alt="" />
+            <h4 class="item-name">Gym Bag Iron</h4>
+            <h5 class="item-price">$250</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UGB1.216_02_440x.jpg?v=1520903171" alt="" />
+            <h4 class="item-name">Gym Bag</h4>
+            <h5 class="item-price">$250</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB1.215_01_440x.jpg?v=1520903174" alt="" />
+            <h4 class="item-name">Cross Body Square Iron</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB1.214_01_440x.jpg?v=1520903173" alt="" />
+            <h4 class="item-name">Cross Body Square</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB2.214_01_440x.jpg?v=1520903177" alt="" />
+            <h4 class="item-name">Cross Body</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB1.216_01_440x.jpg?v=1520903175" alt="" />
+            <h4 class="item-name">Cross Body Square</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB2.216_01_440x.jpg?v=1523919810" alt="" />
+            <h4 class="item-name">Cross Body</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/YZ6UCB2.215_01_440x.jpg?v=1520903178" alt="" />
+            <h4 class="item-name">Cross Body Iron</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men blue brown black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/IMG_0052_edit_137b1d1d-7d5f-4802-aa9b-9f12626e9a4b_440x.jpg?v=1530908712" alt="" />
+            <h4 class="item-name">Calabasas 3 Pack Socks</h4>
+            <h5 class="item-price">$80</h5>
+          </div>
+          <div class="grid-item new women men black red">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/IMG_8984_6c00b9f6-8c18-44cc-a595-bd2ec20095fb_440x.jpg?v=1509090482" alt="" />
+            <h4 class="item-name">Contrast Brim Chest Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5U7006_01_035dacec-a23d-433b-9d2a-6aa7bbb0818a_440x.jpg?v=1523566946" alt="" />
+            <h4 class="item-name">Las Virgenes Dad Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5U7005_01_4c6232f3-0c80-481f-923a-f7e0b8829026_440x.jpg?v=1523567348" alt="" />
+            <h4 class="item-name">Lost Dad Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5U7002_01_516fbdf2-f848-4154-9427-caa953a2e8db_440x.jpg?v=1523567615" alt="" />
+            <h4 class="item-name">Calabasas Lost Dad Hat</h4>
+            <h5 class="item-price">$60</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5A1000_01_BLACK_980x1_ecff23c4-3f2b-440f-a19a-9f6a7663b5aa_440x.jpg?v=1524327365" alt="" />
+            <h4 class="item-name">Nylon Backpack</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5A1000_01_ROCK_980x_63bbdaf0-ae39-49b1-bc6c-3bb7cf3cbf48_440x.jpg?v=1524327187" alt="" />
+            <h4 class="item-name">Suede Backpack</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/3Y8A2331_980x_21f4b665-51b0-4982-bc1e-349ce3201dbc_440x.jpg?v=1524326933" alt="" />
+            <h4 class="item-name">Suede Backpack</h4>
+            <h5 class="item-price">$120</h5>
+          </div>
+          <div class="grid-item new women men brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/3Y8A2358_440x.jpg?v=1507152568" alt="" />
+            <h4 class="item-name">Suede Waist Bag</h4>
+            <h5 class="item-price">$100</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5A1003_01_TRUFFLE_50645990-b55a-4dcc-88fb-202d36cbfa20_440x.jpg?v=1507152532" alt="" />
+            <h4 class="item-name">Nylon Waist Bag</h4>
+            <h5 class="item-price">$100</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5A1003_01_WHISPER_440x.jpg?v=1507152565" alt="" />
+            <h4 class="item-name">Suede Waist Bag</h4>
+            <h5 class="item-price">$100</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/3Y8A2353_21_440x.jpg?v=1507152534" alt="" />
+            <h4 class="item-name">Nylon Waist Bag</h4>
+            <h5 class="item-price">$100</h5>
+          </div>
+          <div class="grid-item new women men green">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5A1002_02_TRUFFLE_2ad4dfed-c453-48e8-b9d0-19f47988fa3e_440x.jpg?v=1524610938" alt="" />
+            <h4 class="item-name">Nylon Gym Bag</h4>
+            <h5 class="item-price">$200</h5>
+          </div>
+          <div class="grid-item new women men black">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/3Y8A2344_7fde42ad-ae37-42f4-a469-7737d10a12c1_440x.jpg?v=1524610926" alt="" />
+            <h4 class="item-name">Nylon Gym Bag</h4>
+            <h5 class="item-price">$200</h5>
+          </div>
+          <div class="grid-item women grey brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5104.095_01_440x.jpg?v=1516144077" alt="" />
+            <h4 class="item-name">PVC High Heel</h4>
+            <h5 class="item-price">$650</h5>
+          </div>
+          <div class="grid-item women grey brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5114.095_01_440x.jpg?v=1516144107" alt="" />
+            <h4 class="item-name">PVC Mule Heel</h4>
+            <h5 class="item-price">$650</h5>
+          </div>
+          <div class="grid-item women brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5140.093_01_440x.jpg?v=1516144099" alt="" />
+            <h4 class="item-name">Stretch Canvas Ankle Boot High</h4>
+            <h5 class="item-price">$465</h5>
+          </div>
+          <div class="grid-item women grey brown">
+            <img src="//cdn.shopify.com/s/files/1/1765/5971/products/KW5129.007_01_440x.jpg?v=1516144090" alt="" />
+            <h4 class="item-name">Stretch Satin Ankle Boot Low</h4>
+            <h5 class="item-price">$495</h5>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <footer>
+      <i id="back-to-top-btn" class="fas fa-angle-up" aria-hidden="true"></i>
+      
+      <p>Help</p>
+      <p>Terms</p>
+      <p>Sign Up</p>
+      <a id="logo" href="/">
+        <img src="https://s20.postimg.cc/8rsxvbezx/logo.png" alt="logo">
+      </a>
+      <p class="active">Shop</p>
+      <p>About</p>
+      <p>Contact</p>
+      
+      <i id="cart" class="fas fa-shopping-bag"></i>
+    </footer>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/index.js"></script>
+
+    <script>$(document).ready(function(){
+
+        backToTopButton();
+        
+        defaultFilter();
+        
+        addIdentifiers();
+        
+        initialFilterCount();
+        
+        updateFilterDisplay();
+        
+        // items grid and its settings
+        var $grid = $('.grid').imagesLoaded( function() {
+          // init Isotope after all images have loaded
+          $grid.isotope({
+            itemSelector: '.grid-item',
+            percentPosition: true,
+            layoutMode: 'fitRows'
+          });
+        });
+        
+        // filter items
+        var filters = {};
+        // do filtering on category button change
+        $('#category-button-group').on( 'click', function( event ) {
+          var checkbox = event.target;
+          var $checkbox = $( checkbox );
+          var group = $checkbox.parents('.button-group').attr('data-filter-group');
+          // create array for filter group, if not there yet
+          var filterGroup = filters[ group ];
+          if ( !filterGroup ) {
+            filterGroup = filters[ group ] = [];
+          }
+          // add/remove filter
+          if ( checkbox.checked ) {
+            // add filter
+            filterGroup.push( checkbox.value );
+          } else {
+            // remove filter
+            var index = filterGroup.indexOf( checkbox.value );
+            filterGroup.splice( index, 1 );
+          }
+          
+          var comboFilter = getComboFilter();
+          $grid.isotope({ filter: comboFilter });    
+          
+          checkIfItems();
+          updateFilterCount();
+          updateFilterDisplay();
+          $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });  
+        // do filtering on color button change
+        $('#color-button-group').on( 'click', function( event ) {
+          var checkbox = event.target;
+          var $checkbox = $( checkbox );
+          var group = $checkbox.parents('.button-group').attr('data-filter-group');
+          // create array for filter group, if not there yet
+          var filterGroup = filters[ group ];
+          if ( !filterGroup ) {
+            filterGroup = filters[ group ] = [];
+          }
+          // add/remove filter
+          if ( $(checkbox).hasClass('is-checked') ) {
+            // add filter
+            filterGroup.push( $(checkbox).attr('data-filter') );
+          } else {
+            // remove filter
+            var index = filterGroup.indexOf( $(checkbox).attr('data-filter') );
+            filterGroup.splice( index, 1 );
+          }
+          
+          var comboFilter = getComboFilter();
+          $grid.isotope({ filter: comboFilter });
+          
+          checkIfItems();
+          updateFilterCount();
+          updateFilterDisplay();
+          $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });
+        
+        // change 'is-checked' class on buttons for filters
+        $('#category-button-group').on( 'click', '.button', function( event ) {
+          $('#category-button-group').find('.is-checked').removeClass('is-checked');
+          var $button = $( event.currentTarget );
+          $button.addClass('is-checked');
+          // removes checked property of buttons that are not selected. acts like a set of radio buttons
+          var $checkboxes = $('#category-button-group div input[type=checkbox]');
+          $checkboxes.prop('checked', false)
+        });
+        
+        $('#color-button-group').on( 'click', '.button', function( event ) {
+          var $button = $( event.currentTarget );
+          $button.toggleClass('is-checked');
+        });
+        
+        function backToTopButton() {
+          var btt = $('#back-to-top-btn');
+        
+          // shows button after scroll position
+          $(window).scroll(function() {
+            if ($('body').scrollTop() > 100 || $('html').scrollTop() > 100) {
+              btt.addClass('show');
+            } else {
+              btt.removeClass('show');
+            }
+          });
+        
+          // button animation back to top
+          btt.click(function() {
+            $('body').animate({scrollTop: 0}, 500);
+            $('html').animate({scrollTop: 0}, 500);
+          });
+        }
+      
+        function defaultFilter() {
+          // filter for 'all' categories is selected at start
+          $('#category-button-group div #all').prop('checked', true);
+        }
+        
+        function addIdentifiers() {
+          // add identifiers (such as title and alt text) to each item in grid based on their title
+          var $items = $('.grid-item');
+          $items.map(function() {
+            // adds title to item so the item name is displayed when hovered on
+            $(this).attr('title', $(this).children('.item-name').html().toUpperCase());
+            $(this).children('img').attr('alt', $(this).children('.item-name').html().toUpperCase());
+          });
+          
+          // add identifier (a title) to each category filter based on their type
+          var $categoreies = $('#category-button-group div .button');
+          $categoreies.map(function() {
+            // adds title to category so the color name is displayed when hovered on
+            $(this).attr('title', $(this).html().toUpperCase());
+          });
+          
+          // add identifier (a title) to each color filter based on their color
+          var $colors = $('#color-button-group .color-circle');
+          $colors.map(function() {
+            // adds title to color so the color name is displayed when hovered on
+            $(this).attr('title', $(this).attr('id').toUpperCase());
+          });
+        }
+        
+        function initialFilterCount() {
+          var $filterCount = $('#initial-filter-count');
+          var $grid = $('.grid');
+          var iso = $grid.data('isotope');
+          $filterCount.text( $grid.children('.grid-item').length + ' items' );
+        }
+        
+        function updateFilterCount() {
+          $('#initial-filter-count').css('display', 'none')
+          $('#updated-filter-count').css('display', 'block')
+          var $filterCount = $('#updated-filter-count');
+          var $grid = $('.grid');
+          var iso = $grid.data('isotope');
+          $filterCount.text( iso.filteredItems.length + ' items' );
+        }
+        
+        function getComboFilter() {
+          var combo = [];
+          for ( var prop in filters ) {
+            var group = filters[ prop ];
+            if ( !group.length ) {
+              // no filters in group, carry on
+              continue;
+            }
+            // add first group
+            if ( !combo.length ) {
+              combo = group.slice(0);
+              continue;
+            }
+            // add additional groups
+            var nextCombo = [];
+            // split group into combo: [ A, B ] & [ 1, 2 ] => [ A1, A2, B1, B2 ]
+            for ( var i=0; i < combo.length; i++ ) {
+              for ( var j=0; j < group.length; j++ ) {
+                var item = combo[i] + group[j];
+                nextCombo.push( item );
+              }
+            }
+            combo = nextCombo;
+          }
+          var comboFilter = combo.join(', ');
+          return comboFilter;
+        }
+        
+        function updateFilterDisplay() {
+          // display applied filters
+          var $categoryDisplay = $('#category-filter-display');
+          var $colorDisplay = $('#color-filter-display');
+          
+          var $activeCategory = $('#category-button-group div .is-checked').html().toUpperCase();
+          
+          var $activeColors = $('#color-button-group .is-checked');
+          var $activeColorsList = [];
+          $activeColors.map(function() {
+            if ( $activeColorsList.length > 0 ) {
+              $activeColorsList.push( ' + ' );
+            }
+            
+            $activeColorsList.push( $(this).attr('id').toUpperCase() );
+          });
+          
+          $categoryDisplay.html($activeCategory);
+          $colorDisplay.html($activeColorsList);
+        }
+        
+        function checkIfItems() {
+          // presents text to the user, notifying them that their filter options brought back no items
+          var noItemsText = $('#no-items-container');
+          if ( $('.grid').css('height') == '0px' ) {
+            noItemsText.css('height', 'auto');
+            noItemsText.css('margin-top', '10vh');
+          } else {
+            noItemsText.css('height', '0');
+            noItemsText.css('margin-top', '0');
+          }
+          
+          updateFilterCount()
+        }
+        
+      });
+      </script>
+  </body>
+</html>
